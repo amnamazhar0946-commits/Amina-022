@@ -1,0 +1,76 @@
+#include <iostream>
+using namespace std;
+
+int main() {
+    // Variables
+    int numDevices;
+    double repairCost, totalCost = 0.0, discountAmount;
+    int discountCount = 0;
+    const double DISCOUNT_THRESHOLD = 3000.0;
+    const double DISCOUNT_RATE = 0.05; // 5% discount
+    
+    // Program header
+    cout << "==========================================" << endl;
+    cout << "      MOBILE REPAIR SHOP BILLING SYSTEM   " << endl;
+    cout << "==========================================" << endl;
+    
+    // Input: Number of devices
+    cout << "\nEnter the number of devices to repair: ";
+    cin >> numDevices;
+    
+    // Validate input
+    while (numDevices <= 0) {
+        cout << "Invalid input! Please enter a positive number: ";
+        cin >> numDevices;
+    }
+    
+    cout << "\nEnter repair costs for each device:" << endl;
+    cout << "-----------------------------------" << endl;
+    
+    // Loop through each device
+    for (int i = 1; i <= numDevices; i++) {
+        cout << "Device " << i << " repair cost: $";
+        cin >> repairCost;
+        
+        // Validate repair cost
+        while (repairCost < 0) {
+            cout << "Invalid cost! Please enter a positive amount: $";
+            cin >> repairCost;
+        }
+        
+        // Check if discount applies
+        if (repairCost > DISCOUNT_THRESHOLD) {
+            // Calculate discount
+            discountAmount = repairCost * DISCOUNT_RATE;
+            repairCost -= discountAmount; // Apply discount
+            discountCount++; // Increment discount counter
+            
+            cout << "  -> 5% discount applied! Final cost: $" << repairCost << endl;
+        } else {
+            cout << "  -> No discount applied." << endl;
+        }
+        
+        // Add to total cost
+        totalCost += repairCost;
+    }
+    
+    // Output results
+    cout << "\n==========================================" << endl;
+    cout << "              BILL SUMMARY                " << endl;
+    cout << "==========================================" << endl;
+    cout << fixed;
+    cout.precision(2); // Set decimal precision
+    
+    cout << "Total number of devices repaired: " << numDevices << endl;
+    cout << "Number of devices with discount:  " << discountCount << endl;
+    cout << "Total repair cost (after discount): $" << totalCost << endl;
+  
+    if (discountCount > 0) {
+        double totalSaved = (totalCost / (1 - DISCOUNT_RATE)) - totalCost;
+        cout << "Total discount amount saved:    $" << totalSaved << endl;
+    }
+    
+    cout << "==========================================" << endl;
+    
+    return 0;
+}
